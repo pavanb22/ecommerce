@@ -48,7 +48,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/checkout',[CheckoutController::class,'index']);
     Route::post('/place-order',[CheckoutController::class,'placeorder']);
     Route::get('/my-orders',[UserController::class,'index']);
-    Route::get('/view-order/{id}',[UserController::class,'view']);
+    Route::get('/view-order/{id}/{notify_id?}',[UserController::class,'view']);
     Route::get('/wishlist',[WishlistController::class,'index']);
     Route::get('/add-review/{slug}/userreview',[ReviewController::class,'add']);
     Route::get('/edit-review/{slug}/userreview',[ReviewController::class,'edit']);
@@ -56,6 +56,10 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/edit-review',[ReviewController::class,'update']);
     Route::post('/proceed-to-pay',[CheckoutController::class,'razorpaycheck']);
     Route::post('/add-rating',[RatingControlller::class,'addrating']);
+    Route::get('/profile',[UserController::class,'profile']);
+    Route::put('/update-profile/{id}',[UserController::class,'updateprofile']);
+    Route::put('/update-address/{id}',[UserController::class,'updateaddress']);
+    Route::get('/download/{file_name}',[UserController::class,'download']);
 });
 
 Route::middleware(['auth','isAdmin'])->group(function(){
@@ -73,9 +77,10 @@ Route::middleware(['auth','isAdmin'])->group(function(){
     Route::put('/edit-product/{id}',[ProductController::class,'update']);
     Route::get('/delete-product/{id}',[ProductController::class,'delete']);
     Route::get('/orders',[OrderController::class,'index']);
-    Route::get('/admin/view-order/{id}',[OrderController::class,'view']);
+    Route::get('/admin/view-order/{id}/{notify_id?}',[OrderController::class,'view']);
     Route::put('/update-order/{id}',[OrderController::class,'updateorder']);
     Route::get('/order-history',[OrderController::class,'orderhistory']);
     Route::get('/users',[DashboardController::class,'users']);
-    Route::get('/view-user/{id}',[DashboardController::class,'viewuser']);
+    Route::get('/view-user/{id}/',[DashboardController::class,'viewuser']);
+    Route::get('/mark-all-read',[HomeController::class,'markallread']);
 });

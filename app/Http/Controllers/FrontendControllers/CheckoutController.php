@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
+use App\Notifications\OrderNotification\OrderPlaceNotification;
+use App\Notifications\OrderNotification\OrderPlaceDatabaseNotification;
 
 class CheckoutController extends Controller
 {
@@ -95,6 +97,13 @@ class CheckoutController extends Controller
 
         $cartitems = Cart::where('user_id',Auth::id())->get();
         Cart::destroy($cartitems);
+
+        $user = User::where('id',Auth::id())->first();
+        $order = Order::where('id',$order->id)->where('user_id',Auth::id())->first();
+        $user->notify(new OrderPlaceNotification($user,$order));
+
+        $useradmin = User::where('role_as','1')->first();
+        $useradmin->notify(new OrderPlaceDatabaseNotification($order));
 
         if($request->payment_mode == 'Razorpay')
         {

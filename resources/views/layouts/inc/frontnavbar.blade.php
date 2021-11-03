@@ -31,9 +31,31 @@
           @endif
         @else
           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarbellDropdown" role="button"  data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i>
+            @if(Auth::user()->unreadNotifications->count())
+              <span class="badge badge-danger badge-counter bg-danger">{{Auth::user()->unreadNotifications->count()}}</span>
+            @endif
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarbellDropdown">
+              @php $count = 1; @endphp
+              @foreach(Auth::user()->unreadNotifications as $notification)
+                @if ($count <= 3)
+                  <li><a class="dropdown-item fw-bold" href="/view-order/{{$notification->data['order_id']}}/{{$notification->id}}"><i class="fa fa-check mr-2"></i> {{$notification->data['data']}}</a></li>
+                  @php $count++; @endphp
+                @endif
+              @endforeach
+              @foreach(Auth::user()->readNotifications as $notification)
+                @if ($count <= 3)
+                  <li><a class="dropdown-item" href="/view-order/{{$notification->data['order_id']}}/{{$notification->id}}"><i class="fa fa-check mr-2"></i> {{$notification->data['data']}}</a></li>
+                  @php $count++; @endphp
+                @endif
+              @endforeach
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"  data-bs-toggle="dropdown" aria-expanded="false">{{ Auth::user()->name }}</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">My Profile</a></li>
+              <li><a class="dropdown-item" href="/profile">My Profile</a></li>
               <li><a class="dropdown-item" href="/my-orders">My Orders</a></li>
               <li>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

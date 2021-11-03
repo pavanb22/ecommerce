@@ -61,7 +61,7 @@ My Cart
         <div class="card-footer">
             <div class="col-lg-10">
                 <h6 class="mb-4">Total Price : &#x20b9; {{$total}} 
-                <a href="/checkout" class="btn btn-success float-end">Proceed to Checkout</a>
+                    <a href="/checkout" class="btn btn-success float-end">Proceed to Checkout</a>
                 </h6>  
             </div>
         </div>

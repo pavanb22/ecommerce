@@ -59,6 +59,9 @@ My Orders
                                 </table>
                                 <h6 class="px-2">Grand Total <span class="float-end">&#x20b9; {{$orders->total_price}}</span></h6>
                                 <h6 class="px-2">Payment Mode <span class="float-end">{{$orders->payment_mode}}</span></h6>
+                                @if($orders->status == '1')
+                                    <h6 class="px-2">Invoice <a href="/download/{{$invoice->file_name}}" class="float-end btn btn-link" target="_blank">Download</a></h6>
+                                @endif
                             </div>
                         </div>
                     </div>

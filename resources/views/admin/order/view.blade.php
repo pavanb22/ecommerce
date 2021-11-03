@@ -55,16 +55,20 @@
                                     </tbody>
                                 </table>
                                 <h4 class="px-2 font-weight-bold mb-3">Grand Total <span class="float-right">&#x20b9; {{$orders->total_price}}</span></h4>
-                                <label for="order_status">Order Status</label>
-                                <form action="/update-order/{{$orders->id}}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                    <select class="form-select mb-2" name="order_status" id="order_status">
-                                        <option value="0" {{$orders->status == '0' ? 'selected':''}}>Pending</option>
-                                        <option value="1" {{$orders->status == '1' ? 'selected':''}}>Delivered</option>
-                                    </select>
-                                    <button type="submit" class="btn btn-primary btn-sm mt-2 float-right" style="font-size:14px;"><i class="material-icons mr-1">mode_edit</i>Update</button>
-                                </form>
+                                @if($orders->status == '1')
+                                    <h5 class="px-2 font-weight-bold mb-3">Order Status<span class="float-right">Delivered</span></h5>
+                                @else
+                                    <label for="order_status">Order Status</label>
+                                    <form action="/update-order/{{$orders->id}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                        <select class="form-select mb-2" name="order_status" id="order_status">
+                                            <option value="0" {{$orders->status == '0' ? 'selected':''}}>Pending</option>
+                                            <option value="1" {{$orders->status == '1' ? 'selected':''}}>Delivered</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary btn-sm mt-2 float-right" style="font-size:14px;"><i class="material-icons mr-1">mode_edit</i>Update</button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
 </div>

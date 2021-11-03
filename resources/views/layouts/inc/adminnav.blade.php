@@ -19,19 +19,32 @@
             </form>
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
-                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
-                  <span class="notification">5</span>
+                  @if(Auth::user()->unreadNotifications->count())
+                    <span class="notification">{{Auth::user()->unreadNotifications->count()}}</span>
+                  @endif
                   <p class="d-lg-none d-md-block">
                     Some Actions
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                  <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                  <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                  <a class="dropdown-item" href="#">Another Notification</a>
-                  <a class="dropdown-item" href="#">Another One</a>
+                  @if(Auth::user()->unreadNotifications->count())
+                    <a class="dropdown-item text-center text-danger font-weight-bold" href="/mark-all-read"><i class="material-icons mr-2">markunread</i>Mark all as Read</a>
+                  @endif
+                  @php $count = 1; @endphp
+                  @foreach(Auth::user()->unreadNotifications as $notification)
+                    @if ($count <= 3)
+                      <a class="dropdown-item font-weight-bold" href="/admin/view-order/{{$notification->data['order_id']}}/{{$notification->id}}"><i class="material-icons mr-2">receipt</i>{{$notification->data['data']}}</a>
+                      @php $count++; @endphp
+                    @endif
+                  @endforeach
+                  @foreach(Auth::user()->readNotifications as $notification)
+                    @if ($count <= 3)
+                      <a class="dropdown-item" href="/admin/view-order/{{$notification->data['order_id']}}/{{$notification->id}}"><i class="material-icons mr-2">receipt</i>{{$notification->data['data']}}</a>
+                      @php $count++; @endphp
+                    @endif
+                  @endforeach
                 </div>
               </li>
               <li class="nav-item dropdown">

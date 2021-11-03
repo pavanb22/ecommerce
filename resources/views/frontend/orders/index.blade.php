@@ -39,6 +39,7 @@ My Orders
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="float-end"> {{ $orders->links() }}</div>
                     </div>
                 </div>
             </div>
